@@ -33,24 +33,40 @@
 
 package test;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import team25core.FourWheelDirectDrivetrain;
+import team25core.GamepadTask;
 import team25core.Robot;
 import team25core.RobotEvent;
 import team25core.TankDriveTask;
 import team25core.TankMechanumControlSchemeReverse;
 import team25core.TeleopDriveTask;
 
-@Autonomous(name = "MechanumTestExample1")
+@TeleOp(name = "LeagueMeet0")
 //@Disabled
-public class FourWheelGearedMecanumTeleop extends Robot {
+public class RollingStoneTeleop extends Robot {
 
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
+
+    //emily's code
+
+    private Servo leftServo;
+    private Servo rightServo;
+    private Servo monsterRetentionServo;
+    private DcMotor liftMotor;
+    private final double OPEN_LEFT_SERVO = 85 / 256; //FIXME
+    private final double OPEN_RIGHT_SERVO = 171 / 256; //FIXME
+    private final double CLOSE_LEFT_SERVO = 52 / 256; //FIXME
+    private final double CLOSE_RIGHT_SERVO = 196 / 256; //FIXME
+    private final double OPEN_MONSTER_RETENTION_SERVO = 256 / 256;
+    private final double CLOSE_MONSTER_RETENTION_SERVO = 128 / 256;
+    //emily's code
 
     private TeleopDriveTask drivetask;
 
@@ -58,19 +74,29 @@ public class FourWheelGearedMecanumTeleop extends Robot {
 
     private static final int TICKS_PER_INCH = 79;
 
+
     @Override
-    public void handleEvent(RobotEvent e)
-    {
-       // Nothing to do here...
+    public void handleEvent(RobotEvent e) {
+        // Nothing to do here...
     }
 
     @Override
-    public void init()
-    {
+    public void init() {
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         rearLeft = hardwareMap.get(DcMotor.class, "rearLeft");
         rearRight = hardwareMap.get(DcMotor.class, "rearRight");
+
+        //emily's
+        liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
+        leftServo = hardwareMap.servo.get("leftServo");
+        rightServo = hardwareMap.servo.get("rightServo");
+        monsterRetentionServo = hardwareMap.servo.get("monsterRetentionServo");
+        monsterRetentionServo.setPosition(CLOSE_MONSTER_RETENTION_SERVO);
+
+        liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotor.setPower(0.0);
+        //emily's
 
         TankMechanumControlSchemeReverse scheme = new TankMechanumControlSchemeReverse(gamepad1);
 
@@ -79,9 +105,43 @@ public class FourWheelGearedMecanumTeleop extends Robot {
     }
 
     @Override
-    public void start()
-    {
+    public void start() {
         this.addTask(new TankDriveTask(this, drivetrain));
-    }
 
+        monsterRetentionServo.setPosition(OPEN_MONSTER_RETENTION_SERVO);
+        //emily's
+        this.addTask(new GamepadTask(this, GamepadTask.GamepadNumber.GAMEPAD_1) {
+            //@Override
+            public void handleEvent(RobotEvent e) {
+                GamepadEvent gamepadEvent = (GamepadEvent) e;
+
+                switch (gamepadEvent.kind) {
+                    case LEFT_BUMPER_DOWN:
+                        leftServo.setPosition(OPEN_LEFT_SERVO);
+                        rightServo.setPosition(OPEN_RIGHT_SERVO);
+                        break;
+                    case RIGHT_BUMPER_DOWN:
+                        leftServo.setPosition(CLOSE_LEFT_SERVO);
+                        rightServo.setPosition(CLOSE_RIGHT_SERVO);
+                        break;
+                    case BUTTON_A_DOWN:
+                        liftMotor.setPower(-0.5);
+                        break;
+                    case BUTTON_Y_DOWN:
+                        liftMotor.setPower(0.5);
+                        break;
+                    case BUTTON_B_DOWN:
+                        liftMotor.setPower(0.0);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
 }
+
+
+
+
+
