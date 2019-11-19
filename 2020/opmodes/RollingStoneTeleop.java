@@ -49,7 +49,7 @@ import team25core.TankMechanumControlSchemeBackwards;
 import team25core.TankMechanumControlSchemeReverse;
 import team25core.TeleopDriveTask;
 
-@TeleOp(name = "LeagueMeet0")
+@TeleOp(name = "LM1 CODE")
 //@Disabled
 public class RollingStoneTeleop extends Robot {
 
@@ -57,6 +57,12 @@ public class RollingStoneTeleop extends Robot {
     private DcMotor frontRight;
     private DcMotor rearLeft;
     private DcMotor rearRight;
+
+    //amory's
+
+
+        private Servo foundationHookLeft;
+        private Servo foundationHookRight;
 
     //emily's code
 
@@ -94,6 +100,13 @@ public class RollingStoneTeleop extends Robot {
 
     @Override
     public void init() {
+
+        foundationHookLeft = hardwareMap.servo.get("foundationHookLeft");
+        foundationHookRight = hardwareMap.servo.get("foundationHookRight");
+
+        foundationHookLeft.setPosition(0.0390625);
+        foundationHookRight.setPosition(0.34765625);
+
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         rearLeft = hardwareMap.get(DcMotor.class, "rearLeft");
@@ -127,6 +140,7 @@ public class RollingStoneTeleop extends Robot {
         drivetrain.setNoncanonicalMotorDirection();
     }
 
+
     public void liftMotorOneStep(DcMotorSimple.Direction direction)
     {
         if (direction == DcMotorSimple.Direction.FORWARD) {
@@ -142,6 +156,9 @@ public class RollingStoneTeleop extends Robot {
 
     @Override
     public void start() {
+
+       //switch (gamepadEvent.kind)
+
 
         TankMechanumControlSchemeBackwards scheme = new TankMechanumControlSchemeBackwards(gamepad1);
         // added lines 146 and 148
@@ -181,7 +198,15 @@ public class RollingStoneTeleop extends Robot {
                     case DPAD_LEFT_DOWN:
                         monsterRetentionServo.setPosition(CLOSE_MONSTER_RETENTION_SERVO);
                         break;
-                    default:
+                    case RIGHT_TRIGGER_DOWN:
+                        foundationHookLeft.setPosition(0.0390625);
+                        foundationHookRight.setPosition(0.34765625);
+                        break;
+                    case RIGHT_BUMPER_DOWN:
+                        foundationHookLeft.setPosition(0.54296875);
+                        foundationHookRight.setPosition(0.83984375);
+                        break;
+                        default:
                         break;
                 }
             }
