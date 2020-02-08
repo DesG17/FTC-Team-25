@@ -195,7 +195,7 @@ public class StoneAutonomous extends Robot {
         RobotLog.ii(TAG,  "delta: " + delta);
 
 
-        drivetrain = new MechanumGearedDrivetrain(360, frontRight, rearRight, frontLeft, rearLeft);
+        drivetrain = new MechanumGearedDrivetrain(frontRight, rearRight, frontLeft, rearLeft);
         drivetrain.resetEncoders();
         drivetrain.encodersOn();
         RobotLog.i("start moving");

@@ -14,8 +14,8 @@ import team25core.RobotEvent;
 import team25core.StandardFourMotorRobot;
 import team25core.StoneDetectionTask;
 
-@Autonomous(name = "SkyStoneAutoILT", group = "Team 25") //AutoMeet9
-public class SkyStoneAutoILT2 extends StandardFourMotorRobot {
+@Autonomous(name = "SkyStoneAutoILT_Two", group = "Team 25") //AutoMeet9
+public class SkyStoneAutoILT2 extends Robot {
 
 
     private final static String TAG = "STONEZ";

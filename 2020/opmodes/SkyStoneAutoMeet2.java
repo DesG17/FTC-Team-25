@@ -519,7 +519,7 @@ public class SkyStoneAutoMeet2 extends Robot {
         RobotLog.ii(TAG,  "delta: " + delta);
 
 
-        drivetrain1 = new MechanumGearedDrivetrain(360, frontRight, rearRight, frontLeft, rearLeft);
+        drivetrain1 = new MechanumGearedDrivetrain(frontRight, rearRight, frontLeft, rearLeft);
         drivetrain1.resetEncoders();
         drivetrain1.encodersOn();
         RobotLog.i("start moving");

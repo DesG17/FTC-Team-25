@@ -112,7 +112,7 @@ public class StoneAutonomousDepot extends Robot {
             rearLeft = hardwareMap.get(DcMotor.class, "rearLeft");
             rearRight = hardwareMap.get(DcMotor.class, "rearRight");
 
-            drivetrain = new MechanumGearedDrivetrain(360, frontLeft, rearLeft, frontRight, rearRight);
+            drivetrain = new MechanumGearedDrivetrain(frontLeft, rearLeft, frontRight, rearRight);
             drivetrain.encodersOn();
             drivetrain.resetEncoders();
 

@@ -14,11 +14,12 @@ import team25core.GamepadTask;
 import team25core.MechanumGearedDrivetrain;
 import team25core.Robot;
 import team25core.RobotEvent;
+import team25core.StandardFourMotorRobot;
 import team25core.StoneDetectionTask;
 
 @Autonomous(name = "AutoMeet2", group = "Team 25")
 @Disabled
-public class SkyStoneAutoMeet1 extends Robot {
+public class SkyStoneAutoMeet1 extends StandardFourMotorRobot {
 
 
     private final static String TAG = "STONEZ";
@@ -426,6 +427,7 @@ public class SkyStoneAutoMeet1 extends Robot {
     @Override
     public void init()
     {
+        super.init();
 
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
@@ -455,7 +457,7 @@ public class SkyStoneAutoMeet1 extends Robot {
         RobotLog.ii(TAG,  "delta: " + delta);
 
 
-        drivetrain1 = new MechanumGearedDrivetrain(360, frontRight, rearRight, frontLeft, rearLeft);
+        drivetrain1 = new MechanumGearedDrivetrain(frontRight, rearRight, frontLeft, rearLeft);
         drivetrain1.resetEncoders();
         drivetrain1.encodersOn();
         RobotLog.i("start moving");
