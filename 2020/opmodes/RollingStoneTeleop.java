@@ -78,9 +78,9 @@ public class RollingStoneTeleop extends Robot {
 
     private Servo capstoneServo;
 
-    private final double OPEN_LEFT_SERVO = (float) 85.0 / 256.0;
-    private final double OPEN_RIGHT_SERVO = (float) 145.0 / 256.0;
-    private final double CLOSE_LEFT_SERVO = (float) 159.0 / 256.0;
+    private final double OPEN_LEFT_SERVO = (float) 11.0 / 256.0; //changed
+    private final double OPEN_RIGHT_SERVO = (float) 131.0 / 256.0;  //changed
+    private final double CLOSE_LEFT_SERVO = (float) 70.0 / 256.0;
     private final double CLOSE_RIGHT_SERVO = (float) 62.0 / 256.0;
     //private final double OPEN_MONSTER_RETENTION_SERVO = (float) 70.0 / 256.0;  //220
     //private final double CLOSE_MONSTER_RETENTION_SERVO = (float) 119.0 / 256.0; //117
@@ -233,14 +233,14 @@ public class RollingStoneTeleop extends Robot {
 
         //grabberServo.setPosition(UP_GRABBER_SERVO);
 
-        addTask(new SingleShotTimerTask(this, 2000) //2000 milliseconds == 2 seconds
+        /*addTask(new SingleShotTimerTask(this, 2000) //2000 milliseconds == 2 seconds
         {
             @Override
             public void handleEvent(RobotEvent e){
                 clawOpen();
             }
 
-        });
+        });*/
 
         this.addTask(new GamepadTask(this, GamepadTask.GamepadNumber.GAMEPAD_1) {
             //@Override
